@@ -62,8 +62,16 @@ flutter:
   assets:
     - assets\images\khao-lao-logo.png
     - assets\images\logo.png
-    - assets\images\rice.jpg
     - assets\images\type rice.png
+    - assets\images\rice_list\1920px_x_1080px_46.webp
+    - assets\images\rice_list\1685758244536.jpg
+    - assets\images\rice_list\IMG_bl22_rice_bag_2_1_3BBGUG9N.webp
+    - assets\images\rice_list\rice-1.jpg
+    - assets\images\rice_list\rice-featured-image.jpg
+    - assets\images\rice_list\rice.jpg
+    - assets\images\rice_list\white_rice.jpg
+    - assets\images\rice_list\yellow_rice.jpg
+    
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

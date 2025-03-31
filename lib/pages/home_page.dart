@@ -9,9 +9,9 @@ class HomePage extends StatelessWidget {
     // List of banner images for carousel
     final List<String> bannerImages = [
       'assets/images/rice.jpg',
-      'assets/images/rice_basmati.jpg',
-      'assets/images/rice_jasmine.jpg',
-      'assets/images/rice_brown.jpg',
+      'assets/images/rice_list/rice-featured-image.jpg',
+      'assets/images/rice_list/1685758244536.jpg',
+      'assets/images/rice_list/1920px_x_1080px_46.webp',
     ];
 
     return Scaffold(
@@ -81,7 +81,7 @@ class HomePage extends StatelessWidget {
               CarouselSlider.builder(
                 itemCount: bannerImages.length,
                 options: CarouselOptions(
-                  height: 150,
+                  height: 180,
                   viewportFraction: 1.0,
                   enlargeCenterPage: false,
                   autoPlay: true,
@@ -142,30 +142,34 @@ class HomePage extends StatelessWidget {
 
               const SizedBox(height: 16),
 
-// Horizontal scrollable list of hot rice items
+              const SizedBox(height: 16),
               SizedBox(
-                height: 220, // Adjust based on your item height
+                height: 220, // You might need to adjust this height
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
                     SizedBox(
-                      width: 160, // Adjust width as needed
-                      child: _buildRiceItem('ເຂົ້າໜຽວຫອມມະລິ', '19,000 ກີບ/kg'),
+                      width: 160,
+                      child: _buildRiceItem('ເຂົ້າໜຽວຫອມມະລິ', '19,000 ກີບ/kg',
+                          'assets/images/rice_list/rice-featured-image.jpg'),
                     ),
                     const SizedBox(width: 16),
                     SizedBox(
-                      width: 160, // Adjust width as needed
-                      child: _buildRiceItem('ເຂົ້າກ່ໍາ', '25,000 ກີບ/kg'),
+                      width: 160,
+                      child: _buildRiceItem('ເຂົ້າກ່ໍາ', '25,000 ກີບ/kg',
+                          'assets/images/rice_list/yellow_rice.jpg'),
                     ),
                     const SizedBox(width: 16),
                     SizedBox(
-                      width: 160, // Adjust width as needed
-                      child: _buildRiceItem('ເຂົ້າຈ້າວ', '22,000 ກີບ/kg'),
+                      width: 160,
+                      child: _buildRiceItem('ເຂົ້າຈ້າວ', '22,000 ກີບ/kg',
+                          'assets/images/rice_list/1685758244536.jpg'),
                     ),
                     const SizedBox(width: 16),
                     SizedBox(
-                      width: 160, // Adjust width as needed
-                      child: _buildRiceItem('ເຂົ້າກວດ', '30,000 ກີບ/kg'),
+                      width: 160,
+                      child: _buildRiceItem('ເຂົ້າກວດ', '30,000 ກີບ/kg',
+                          'assets/images/rice_list/IMG_bl22_rice_bag_2_1_3BBGUG9N.webp'),
                     ),
                   ],
                 ),
@@ -182,36 +186,37 @@ class HomePage extends StatelessWidget {
               ),
 
               const SizedBox(height: 16),
-              
-// Horizontal scrollable list of hot rice items
               SizedBox(
-                height: 220, // Adjust based on your item height
+                height: 220, // You might need to adjust this height
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
                     SizedBox(
-                      width: 160, // Adjust width as needed
-                      child: _buildRiceItem('ເຂົ້າໜຽວຫອມມະລິ', '19,000 ກີບ/kg'),
+                      width: 160,
+                      child: _buildRiceItem('ເຂົ້າໜຽວຫອມມະລິ', '19,000 ກີບ/kg',
+                          'assets/images/rice_list/rice-featured-image.jpg'),
                     ),
                     const SizedBox(width: 16),
                     SizedBox(
-                      width: 160, // Adjust width as needed
-                      child: _buildRiceItem('ເຂົ້າກ່ໍາ', '25,000 ກີບ/kg'),
+                      width: 160,
+                      child: _buildRiceItem('ເຂົ້າກ່ໍາ', '25,000 ກີບ/kg',
+                          'assets/images/rice_list/yellow_rice.jpg'),
                     ),
                     const SizedBox(width: 16),
                     SizedBox(
-                      width: 160, // Adjust width as needed
-                      child: _buildRiceItem('ເຂົ້າຈ້າວ', '22,000 ກີບ/kg'),
+                      width: 160,
+                      child: _buildRiceItem('ເຂົ້າຈ້າວ', '22,000 ກີບ/kg',
+                          'assets/images/rice_list/1685758244536.jpg'),
                     ),
                     const SizedBox(width: 16),
                     SizedBox(
-                      width: 160, // Adjust width as needed
-                      child: _buildRiceItem('ເຂົ້າກວດ', '30,000 ກີບ/kg'),
+                      width: 160,
+                      child: _buildRiceItem('ເຂົ້າກວດ', '30,000 ກີບ/kg',
+                          'assets/images/rice_list/IMG_bl22_rice_bag_2_1_3BBGUG9N.webp'),
                     ),
                   ],
                 ),
               ),
-
             ],
           ),
         ),
@@ -219,71 +224,38 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildRiceItem(String name, String price) {
+  Widget _buildRiceItem(String name, String price, String imagePath) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        border: Border.all(color: Colors.grey.shade300),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade200),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 3,
-            offset: const Offset(0, 1),
-          ),
-        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Image at the top
           ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(8),
-              topRight: Radius.circular(8),
-            ),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
             child: Image.asset(
-              name.contains('ກ່ໍາ')
-                  ? 'assets/images/rice.png'
-                  : 'assets/images/rice.png',
-              width: double.infinity,
+              imagePath,
               height: 120,
+              width: 160,
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                // Fallback if image loading fails
-                return Container(
-                  width: double.infinity,
-                  height: 120,
-                  color: name.contains('ກ່ໍາ')
-                      ? Colors.brown[300]
-                      : Colors.amber[100],
-                  child: Center(
-                    child: Text(name),
-                  ),
-                );
-              },
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   name,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                  ),
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 4),
+                SizedBox(height: 4),
                 Text(
                   price,
-                  style: const TextStyle(
-                    color: Color(0xFF006633),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
+                  style: TextStyle(color: Colors.green),
                 ),
               ],
             ),
