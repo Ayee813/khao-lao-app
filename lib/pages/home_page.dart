@@ -119,7 +119,7 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
-                    'Hot',
+                    'ຍອດນິຍົມ',
                     style: TextStyle(
                       color: Color(0xFF006633),
                       fontWeight: FontWeight.bold,
@@ -130,8 +130,8 @@ class HomePage extends StatelessWidget {
                     onPressed: () {
                       // Navigate to all hot products
                     },
-                    child: const Text(
-                      'See All',
+                   child: const Text(
+                      'ເບິ່ງທັງໝົດ',
                       style: TextStyle(
                         color: Color(0xFF006633),
                       ),

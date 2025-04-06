@@ -5,13 +5,26 @@ import 'package:khao_lao/pages/category_page.dart';
 import 'package:khao_lao/pages/home_page.dart';
 
 class BottomNavigationPage extends StatefulWidget {
-  const BottomNavigationPage({Key? key}) : super(key: key);
+  final int initialIndex;
+  
+  const BottomNavigationPage({
+    Key? key,
+    this.initialIndex = 0,
+  }) : super(key: key);
+  
   @override
   _BottomNavigationPageState createState() => _BottomNavigationPageState();
 }
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
-  int _selectedIndex = 0;
+  late int _selectedIndex;
+  
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex;
+  }
+  
   // Define the pages for each tab
   static final List<Widget> _pages = [
     const HomePage(),
@@ -19,7 +32,7 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
     const CartPage(),
     const AccountPage(),
   ];
-
+  
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;

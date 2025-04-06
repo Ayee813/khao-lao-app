@@ -7,9 +7,33 @@ class AccountPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Account'),
-        backgroundColor: const Color(0xFF00C853),
-        foregroundColor: Colors.white,
+        backgroundColor: const Color(0xFF006633),
+        title: const Text(
+          'KHAO LAO',
+          style: TextStyle(
+            color: Color(0xFFFFC65C),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset(
+            'assets/images/logo.png',
+            width: 40,
+            height: 40,
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_none,
+                color: Color(0xFFFFC65C), size: 30),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.menu, color: Color(0xFFFFC65C), size: 35),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
