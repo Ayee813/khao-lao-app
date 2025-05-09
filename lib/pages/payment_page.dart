@@ -30,66 +30,65 @@ class _PaymentPageState extends State<PaymentPage> {
   final Color primaryColor = const Color(0xFFFFC65C);
   final Color backgroundColor = const Color(0xFF006633);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Payment', style: TextStyle(color: Colors.white)),
-        backgroundColor: backgroundColor,
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Order Summary
-            _buildOrderSummary(),
-            
-            const SizedBox(height: 24),
-            
-            // Payment Method Selection
-            _buildPaymentMethodSelection(),
-            
-            const SizedBox(height: 24),
-            
-            // Payment Instructions and QR
-            _buildPaymentInstructions(),
-            
-            const SizedBox(height: 24),
-            
-            // Receipt Upload
-            _buildReceiptUpload(),
-            
-            const SizedBox(height: 32),
-            
-            // Submit Payment Button
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                onPressed: _isProcessing ? null : _submitPayment,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: backgroundColor,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: const Text('ການຊໍາລະ', style: TextStyle(color: Colors.white)),
+      backgroundColor: backgroundColor,
+      iconTheme: const IconThemeData(color: Colors.white),
+    ),
+    body: SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Order Summary
+          _buildOrderSummary(),
+          
+          const SizedBox(height: 24),
+          
+          // Payment Method Selection
+          _buildPaymentMethodSelection(),
+          
+          const SizedBox(height: 24),
+          
+          // Payment Instructions and QR
+          _buildPaymentInstructions(),
+          
+          const SizedBox(height: 24),
+          
+          // Receipt Upload
+          _buildReceiptUpload(),
+          
+          const SizedBox(height: 32),
+          
+          // Submit Payment Button
+          SizedBox(
+            width: double.infinity,
+            height: 50,
+            child: ElevatedButton(
+              onPressed: _isProcessing ? null : _submitPayment,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: backgroundColor,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32), // Changed from 8 to 32 for more rounded corners
                 ),
-                child: _isProcessing
-                    ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text(
-                        'Confirm Payment',
-                        style: TextStyle(fontSize: 16),
-                      ),
               ),
+              child: _isProcessing
+                  ? const CircularProgressIndicator(color: Colors.white)
+                  : const Text(
+                      'ຢືນຢັນການຊໍາລະ',
+                      style: TextStyle(fontSize: 16),
+                    ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
-    );
-  }
-
+    ),
+  );
+}
   Widget _buildOrderSummary() {
     return Card(
       elevation: 2,
@@ -102,7 +101,7 @@ class _PaymentPageState extends State<PaymentPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Order Summary',
+              'ສະຫຼຸບການສັ່ງຊື້',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -113,16 +112,16 @@ class _PaymentPageState extends State<PaymentPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Subtotal:'),
-                Text('${(_orderTotal * 0.9).toStringAsFixed(0)} LAK'),
+                const Text('ລາຄາລວມ:'),
+                Text('${(_orderTotal * 0.9).toStringAsFixed(0)} ກີບ'),
               ],
             ),
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Delivery Fee:'),
-                Text('${(_orderTotal * 0.1).toStringAsFixed(0)} LAK'),
+                const Text('ຄ່າຂົນສົ່ງ:'),
+                Text('${(_orderTotal * 0.1).toStringAsFixed(0)} ກີບ'),
               ],
             ),
             const Divider(height: 24),
@@ -130,11 +129,11 @@ class _PaymentPageState extends State<PaymentPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'Total:',
+                  'ລວມທັງໝົດ:',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  '${_orderTotal.toStringAsFixed(0)} LAK',
+                  '${_orderTotal.toStringAsFixed(0)} ກີບ',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
@@ -150,7 +149,7 @@ class _PaymentPageState extends State<PaymentPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Payment Method',
+          'ວິທີການຊໍາລະ',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -158,36 +157,60 @@ class _PaymentPageState extends State<PaymentPage> {
           ),
         ),
         const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(
-              child: RadioListTile<String>(
-                title: const Text('Bcel One'),
-                value: 'QR',
-                groupValue: _selectedPaymentMethod,
-                activeColor: backgroundColor,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedPaymentMethod = value!;
-                  });
-                },
-              ),
+Row(
+  children: [
+    Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: _selectedPaymentMethod == 'QR' 
+                ? backgroundColor 
+                : Colors.grey.shade200,
+            foregroundColor: _selectedPaymentMethod == 'QR' 
+                ? Colors.white 
+                : Colors.black87,
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32),
             ),
-            Expanded(
-              child: RadioListTile<String>(
-                title: const Text('LDB Bank'),
-                value: 'BANK',
-                groupValue: _selectedPaymentMethod,
-                activeColor: backgroundColor,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedPaymentMethod = value!;
-                  });
-                },
-              ),
-            ),
-          ],
+          ),
+          onPressed: () {
+            setState(() {
+              _selectedPaymentMethod = 'QR';
+            });
+          },
+          child: const Text('BCEL One'),
         ),
+      ),
+    ),
+    Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: _selectedPaymentMethod == 'BANK' 
+                ? backgroundColor 
+                : Colors.grey.shade200,
+            foregroundColor: _selectedPaymentMethod == 'BANK' 
+                ? Colors.white 
+                : Colors.black87,
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32),
+            ),
+          ),
+          onPressed: () {
+            setState(() {
+              _selectedPaymentMethod = 'BANK';
+            });
+          },
+          child: const Text('ທະນາຄານ LDB'),
+        ),
+      ),
+    ),
+  ],
+)
       ],
     );
   }
@@ -205,8 +228,8 @@ class _PaymentPageState extends State<PaymentPage> {
           children: [
             Text(
               _selectedPaymentMethod == 'QR' 
-                  ? 'Scan QR Code to Pay' 
-                  : 'Bank Transfer Details',
+                  ? 'ສະແກນ QR ເພື່ອຊໍາລະ' 
+                  : 'ຂໍ້ມູນການໂອນເງິນ',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -236,7 +259,7 @@ class _PaymentPageState extends State<PaymentPage> {
                               const Icon(Icons.qr_code_2, size: 80, color: Colors.grey),
                               const SizedBox(height: 8),
                               Text(
-                                'QR Code for Payment',
+                                'QR ສຳລັບການຊໍາລະ',
                                 style: TextStyle(color: backgroundColor),
                               ),
                             ],
@@ -247,26 +270,26 @@ class _PaymentPageState extends State<PaymentPage> {
                   ),
                   const SizedBox(height: 16),
                   const Text(
-                    'Scan this QR code with your banking app or mobile wallet to complete payment.',
+                    'ສະແກນ QR ນີ້ດ້ວຍແອັບທະນາຄານຫຼືກະເປົາເງິນມືຖືຂອງທ່ານເພື່ອສໍາເລັດການຊໍາລະ.',
                     textAlign: TextAlign.center,
                   ),
                   Container(
                     child: Column(
                        crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text('Bank: BCEL'),
-                  SizedBox(height: 8),
-                  Text('Account Name: Khao Lao'),
-                  SizedBox(height: 8),
-                  Text('Account Number: 010-12-00-123456789'),
-                  SizedBox(height: 8),
-                  Text('Amount: 150,000 LAK'),
-                  SizedBox(height: 16),
-                  Text(
-                    'Please include your phone number in the transfer notes.',
-                    style: TextStyle(fontStyle: FontStyle.italic),
-                  ),
-                ],
+                      children: const [
+                        Text('ທະນາຄານ: BCEL One'),
+                        SizedBox(height: 8),
+                        Text('ຊື່ບັນຊີ: ເຂົ້າລາວ'),
+                        SizedBox(height: 8),
+                        Text('ເລກບັນຊີ: 010-12-00-123456789'),
+                        SizedBox(height: 8),
+                        Text('ຈໍານວນເງິນ: 150,000 ກີບ'),
+                        SizedBox(height: 16),
+                        Text(
+                          'ກະລຸນາລະບຸເບີໂທລະສັບຂອງທ່ານໃນບັນທຶກການໂອນ.',
+                          style: TextStyle(fontStyle: FontStyle.italic),
+                        ),
+                      ],
                     ),
                   )
                 ],
@@ -275,16 +298,16 @@ class _PaymentPageState extends State<PaymentPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  Text('Bank: BCEL'),
+                  Text('ທະນາຄານ: ພັດທະນາລາວ'),
                   SizedBox(height: 8),
-                  Text('Account Name: Khao Lao'),
+                  Text('ຊື່ບັນຊີ: ເຂົ້າລາວ'),
                   SizedBox(height: 8),
-                  Text('Account Number: 010-12-00-123456789'),
+                  Text('ເລກບັນຊີ: 010-12-00-123456789'),
                   SizedBox(height: 8),
-                  Text('Amount: 150,000 LAK'),
+                  Text('ຈໍານວນເງິນ: 150,000 ກີບ'),
                   SizedBox(height: 16),
                   Text(
-                    'Please include your phone number in the transfer notes.',
+                    'ກະລຸນາລະບຸເບີໂທລະສັບຂອງທ່ານໃນບັນທຶກການໂອນ.',
                     style: TextStyle(fontStyle: FontStyle.italic),
                   ),
                 ],
@@ -300,7 +323,7 @@ class _PaymentPageState extends State<PaymentPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Upload Payment Receipt',
+          'ອັບໂຫລດໃບຮັບເງິນ',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -336,7 +359,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'Tap to upload payment receipt',
+                        'ແຕະເພື່ອອັບໂຫລດໃບຮັບເງິນ',
                         style: TextStyle(
                           fontSize: 16,
                           color: backgroundColor,
@@ -344,7 +367,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       ),
                       const SizedBox(height: 8),
                       const Text(
-                        'Please upload a clear image of your payment confirmation',
+                        'ກະລຸນາອັບໂຫລດຮູບພາບຂອງການຢືນຢັນການຊໍາລະທີ່ຊັດເຈນ',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 14,
@@ -365,7 +388,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 });
               },
               icon: const Icon(Icons.delete, size: 20),
-              label: const Text('Remove'),
+              label: const Text('ລຶບ'),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.red,
               ),
@@ -390,7 +413,7 @@ class _PaymentPageState extends State<PaymentPage> {
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Error picking image: $e'),
+          content: Text('ຜິດພາດໃນການເລືອກຮູບພາບ: $e'),
           backgroundColor: Colors.red,
         ),
       );
@@ -402,7 +425,7 @@ class _PaymentPageState extends State<PaymentPage> {
     if (_receiptImage == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please upload your payment receipt'),
+          content: Text('ກະລຸນາອັບໂຫລດໃບຮັບເງິນຂອງທ່ານ'),
           backgroundColor: Colors.red,
         ),
       );

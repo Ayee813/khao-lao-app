@@ -23,16 +23,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   bool _isVientianeCapital = true;
   String _selectedLogistic = 'ANS';
-  
+
   // Map variables
   MapController? mapController;
-  LatLng _selectedLocation = LatLng(17.9757, 102.6331); // Default to Vientiane center
+  LatLng _selectedLocation =
+      LatLng(17.9757, 102.6331); // Default to Vientiane center
   final List<Marker> _markers = [];
 
   // Primary color scheme
   final Color primaryColor = const Color(0xFFFFC65C);
   final Color backgroundColor = const Color(0xFF006633);
-  
 
   @override
   void initState() {
@@ -41,21 +41,22 @@ class _CheckoutPageState extends State<CheckoutPage> {
     _updateMarker();
   }
 
-void _updateMarker() {
-  _markers.clear();
-  _markers.add(
-    Marker(
-      point: _selectedLocation,
-      width: 40,
-      height: 40,
-      child: Icon(
-        Icons.location_pin,
-        color: Colors.red,
-        size: 40,
+  void _updateMarker() {
+    _markers.clear();
+    _markers.add(
+      Marker(
+        point: _selectedLocation,
+        width: 40,
+        height: 40,
+        child: Icon(
+          Icons.location_pin,
+          color: Colors.red,
+          size: 40,
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -126,7 +127,7 @@ void _updateMarker() {
                     return null;
                   },
                 ),
-                
+
                 const SizedBox(height: 20),
 
                 // Location Selection
@@ -145,7 +146,7 @@ void _updateMarker() {
                       backgroundColor: backgroundColor,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(32),
                       ),
                     ),
                     child: const Text(
@@ -215,29 +216,66 @@ void _updateMarker() {
         Row(
           children: [
             Expanded(
-              child: RadioListTile<bool>(
-                title: const Text('ນະຄອນຫຼວງວຽງຈັນ'),
-                value: true,
-                groupValue: _isVientianeCapital,
-                activeColor: backgroundColor,
-                onChanged: (value) {
-                  setState(() {
-                    _isVientianeCapital = value!;
-                  });
-                },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      _isVientianeCapital = true;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    decoration: BoxDecoration(
+                      color: _isVientianeCapital
+                          ? backgroundColor
+                          : Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(32),
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      'ນະຄອນຫຼວງວຽງຈັນ',
+                      style: TextStyle(
+                        color:
+                            _isVientianeCapital ? Colors.white : Colors.black87,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
             Expanded(
-              child: RadioListTile<bool>(
-                title: const Text('ແຂວງອື່ນໆ'),
-                value: false,
-                groupValue: _isVientianeCapital,
-                activeColor: backgroundColor,
-                onChanged: (value) {
-                  setState(() {
-                    _isVientianeCapital = value!;
-                  });
-                },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      _isVientianeCapital = false;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    decoration: BoxDecoration(
+                      color: !_isVientianeCapital
+                          ? backgroundColor
+                          : Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(32),
+                      border: Border.all(
+                        color: Colors.transparent,
+                        width: 1,
+                      ),
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      'ແຂວງອື່ນໆ',
+                      style: TextStyle(
+                        color: !_isVientianeCapital
+                            ? Colors.white
+                            : Colors.black87,
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
@@ -249,7 +287,6 @@ void _updateMarker() {
       ],
     );
   }
-  
 
   Widget _buildVientianeMapForm() {
     return Column(

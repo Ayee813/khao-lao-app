@@ -46,10 +46,12 @@ class LoginPage extends StatelessWidget {
 
               // Username TextField
               Container(
-                height: 60, // Set your desired height here
+                height: 55,
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: 'Username',
+                    hintStyle: TextStyle(
+                        fontSize: 14),
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
@@ -57,7 +59,7 @@ class LoginPage extends StatelessWidget {
                       borderSide: BorderSide.none,
                     ),
                     contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 15), // Add vertical padding
+                        horizontal: 20, vertical: 15),
                     suffixIcon: const Icon(Icons.person_outline),
                   ),
                 ),
@@ -67,7 +69,7 @@ class LoginPage extends StatelessWidget {
               // Password TextField
 // Password TextField
               Container(
-                height: 60, // Set fixed height to match the username field
+                height: 55, // Set fixed height to match the username field
                 child: TextField(
                   obscureText: true,
                   decoration: InputDecoration(
@@ -88,7 +90,7 @@ class LoginPage extends StatelessWidget {
 
 // Login Button
               Container(
-                height: 60, // Set consistent height for the button
+                height: 55, // Set consistent height for the button
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
@@ -109,7 +111,7 @@ class LoginPage extends StatelessWidget {
                   ),
                   child: const Text(
                     'Log in',
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 16),
                   ),
                 ),
               ),
@@ -127,10 +129,9 @@ class LoginPage extends StatelessWidget {
                     child: const Text(
                       'SignUp',
                       style: TextStyle(
-                        color: Color(0xFFFFC65C),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16
-                      ),
+                          color: Color(0xFFFFC65C),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
                     ),
                   ),
                 ],

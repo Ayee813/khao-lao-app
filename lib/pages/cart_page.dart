@@ -41,14 +41,15 @@ class CartPage extends StatelessWidget {
       body: Consumer<CartProvider>(
         builder: (context, cartProvider, child) {
           final cartItems = cartProvider.items.values.toList();
-          
+
           return Column(
             children: [
               // Page title
               Container(
                 width: double.infinity,
                 color: Colors.grey[200],
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -67,7 +68,8 @@ class CartPage extends StatelessWidget {
                             context: context,
                             builder: (ctx) => AlertDialog(
                               title: const Text('ລຶບທັງໝົດ?'),
-                              content: const Text('ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບສິນຄ້າທັງໝົດໃນກະຕ່າ?'),
+                              content: const Text(
+                                  'ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບສິນຄ້າທັງໝົດໃນກະຕ່າ?'),
                               actions: [
                                 TextButton(
                                   onPressed: () => Navigator.of(ctx).pop(),
@@ -85,7 +87,8 @@ class CartPage extends StatelessWidget {
                           );
                         },
                         icon: const Icon(Icons.delete, color: Colors.red),
-                        label: const Text('', style: TextStyle(color: Colors.red)),
+                        label:
+                            const Text('', style: TextStyle(color: Colors.red)),
                       ),
                   ],
                 ),
@@ -120,7 +123,8 @@ class CartPage extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
                           ),
                           child: const Text(
                             'ຊ໊ອບປິ້ງຕໍ່',
@@ -136,7 +140,8 @@ class CartPage extends StatelessWidget {
               if (cartItems.isNotEmpty)
                 Expanded(
                   child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     itemCount: cartItems.length,
                     itemBuilder: (context, index) {
                       final cartItem = cartItems[index];
@@ -159,7 +164,8 @@ class CartPage extends StatelessWidget {
                             context: context,
                             builder: (ctx) => AlertDialog(
                               title: const Text('ລຶບອອກຈາກກະຕ່າ?'),
-                              content: Text('ທ່ານຕ້ອງການລຶບ ${cartItem.product.name} ອອກຈາກກະຕ່າບໍ່?'),
+                              content: Text(
+                                  'ທ່ານຕ້ອງການລຶບ ${cartItem.product.name} ອອກຈາກກະຕ່າບໍ່?'),
                               actions: [
                                 TextButton(
                                   onPressed: () => Navigator.of(ctx).pop(false),
@@ -199,7 +205,8 @@ class CartPage extends StatelessWidget {
                                         width: 80,
                                         height: 80,
                                         color: Colors.grey[300],
-                                        child: const Icon(Icons.image_not_supported),
+                                        child: const Icon(
+                                            Icons.image_not_supported),
                                       );
                                     },
                                   ),
@@ -209,7 +216,8 @@ class CartPage extends StatelessWidget {
                                 // Product details
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         cartItem.product.name,
@@ -247,24 +255,27 @@ class CartPage extends StatelessWidget {
                                       onTap: () {
                                         if (cartItem.quantity > 1) {
                                           cartProvider.updateQuantity(
-                                            cartItem.product.id, 
-                                            cartItem.quantity - 1
-                                          );
+                                              cartItem.product.id,
+                                              cartItem.quantity - 1);
                                         } else {
                                           // Show confirmation before removing last item
                                           showDialog(
                                             context: context,
                                             builder: (ctx) => AlertDialog(
-                                              title: const Text('ລຶບອອກຈາກກະຕ່າ?'),
-                                              content: Text('ທ່ານຕ້ອງການລຶບ ${cartItem.product.name} ອອກຈາກກະຕ່າບໍ່?'),
+                                              title:
+                                                  const Text('ລຶບອອກຈາກກະຕ່າ?'),
+                                              content: Text(
+                                                  'ທ່ານຕ້ອງການລຶບ ${cartItem.product.name} ອອກຈາກກະຕ່າບໍ່?'),
                                               actions: [
                                                 TextButton(
-                                                  onPressed: () => Navigator.of(ctx).pop(),
+                                                  onPressed: () =>
+                                                      Navigator.of(ctx).pop(),
                                                   child: const Text('ຍົກເລີກ'),
                                                 ),
                                                 TextButton(
                                                   onPressed: () {
-                                                    cartProvider.removeItem(cartItem.product.id);
+                                                    cartProvider.removeItem(
+                                                        cartItem.product.id);
                                                     Navigator.of(ctx).pop();
                                                   },
                                                   child: const Text('ລຶບ'),
@@ -279,7 +290,8 @@ class CartPage extends StatelessWidget {
                                         height: 28,
                                         decoration: BoxDecoration(
                                           color: Colors.red[400],
-                                          borderRadius: BorderRadius.circular(4),
+                                          borderRadius:
+                                              BorderRadius.circular(4),
                                         ),
                                         alignment: Alignment.center,
                                         child: const Icon(
@@ -314,16 +326,16 @@ class CartPage extends StatelessWidget {
                                     InkWell(
                                       onTap: () {
                                         cartProvider.updateQuantity(
-                                          cartItem.product.id, 
-                                          cartItem.quantity + 1
-                                        );
+                                            cartItem.product.id,
+                                            cartItem.quantity + 1);
                                       },
                                       child: Container(
                                         width: 28,
                                         height: 28,
                                         decoration: BoxDecoration(
                                           color: Colors.green,
-                                          borderRadius: BorderRadius.circular(4),
+                                          borderRadius:
+                                              BorderRadius.circular(4),
                                         ),
                                         alignment: Alignment.center,
                                         child: const Icon(
@@ -374,7 +386,8 @@ class CartPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 const Text('ລາຄາສິນຄ້າ:'),
-                                Text('${cartProvider.totalAmount.toStringAsFixed(0)} ກີບ'),
+                                Text(
+                                    '${cartProvider.totalAmount.toStringAsFixed(0)} ກີບ'),
                               ],
                             ),
                             const SizedBox(height: 8),
@@ -409,10 +422,10 @@ class CartPage extends StatelessWidget {
                           ],
                         ),
                       ),
-                      
+
                       const SizedBox(height: 16),
 
-                   // Checkout button
+                      // Checkout button
                       SizedBox(
                         width: double.infinity,
                         height: 48,
@@ -428,9 +441,12 @@ class CartPage extends StatelessWidget {
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF03BE6D),
+                            foregroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(32),
                             ),
+                            elevation:
+                                2, // Added a slight elevation for better visual effect
                           ),
                           child: const Text(
                             'ສັ່ງຊື້ຕອນນີ້',
@@ -441,7 +457,7 @@ class CartPage extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ),
+                      )
                     ],
                   ),
                 ),
