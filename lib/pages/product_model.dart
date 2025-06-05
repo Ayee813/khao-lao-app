@@ -1,8 +1,8 @@
 class Product {
   final String id;
   final String name;
-  final String weight;
-  final double price;  // Make sure this is explicitly a double
+  String weight;  // Non-final so it can be updated
+  final double price;
   final String image;
   
   Product({
@@ -12,4 +12,15 @@ class Product {
     required this.price,
     required this.image,
   });
+  
+  // Create a copy with updated weight
+  Product copyWithWeight(String newWeight) {
+    return Product(
+      id: id,
+      name: name,
+      weight: newWeight,
+      price: price,
+      image: image,
+    );
+  }
 }

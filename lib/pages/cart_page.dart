@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'cart_provider.dart';
-import 'checkout_page.dart'; // Import the new checkout page
+import 'checkout_page.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,9 +86,13 @@ class CartPage extends StatelessWidget {
                           );
                         },
                         icon: const Icon(Icons.delete, color: Colors.red),
-                        label:
-                            const Text('', style: TextStyle(color: Colors.red)),
-                      ),
+                        label: const Text('ລຶບທັງໝົດ',
+                            style: TextStyle(color: Colors.red)),
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.red
+                              .withOpacity(0.1), // Light red background
+                        ),
+                      )
                   ],
                 ),
               ),
@@ -145,6 +148,10 @@ class CartPage extends StatelessWidget {
                     itemCount: cartItems.length,
                     itemBuilder: (context, index) {
                       final cartItem = cartItems[index];
+                      // Controller for the weight input field
+                      final weightController = TextEditingController(
+                          text: cartItem.formattedWeight
+                              .replaceAll(RegExp(r'[^0-9.]'), ''));
                       return Dismissible(
                         key: ValueKey(cartItem.product.id),
                         background: Container(
@@ -228,7 +235,8 @@ class CartPage extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 4),
                                       Text(
-                                        cartItem.product.weight,
+                                        cartItem
+                                            .formattedWeight, // Use formatted weight
                                         style: TextStyle(
                                           fontSize: 14,
                                           color: Colors.grey[700],
@@ -247,43 +255,15 @@ class CartPage extends StatelessWidget {
                                   ),
                                 ),
 
-                                // Quantity selector with +/- buttons
+                                // Weight controls - now with input box
                                 Row(
                                   children: [
-                                    // Decrement button
+                                    // Decrement weight button (-1kg)
                                     InkWell(
                                       onTap: () {
-                                        if (cartItem.quantity > 1) {
-                                          cartProvider.updateQuantity(
-                                              cartItem.product.id,
-                                              cartItem.quantity - 1);
-                                        } else {
-                                          // Show confirmation before removing last item
-                                          showDialog(
-                                            context: context,
-                                            builder: (ctx) => AlertDialog(
-                                              title:
-                                                  const Text('ລຶບອອກຈາກກະຕ່າ?'),
-                                              content: Text(
-                                                  'ທ່ານຕ້ອງການລຶບ ${cartItem.product.name} ອອກຈາກກະຕ່າບໍ່?'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.of(ctx).pop(),
-                                                  child: const Text('ຍົກເລີກ'),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () {
-                                                    cartProvider.removeItem(
-                                                        cartItem.product.id);
-                                                    Navigator.of(ctx).pop();
-                                                  },
-                                                  child: const Text('ລຶບ'),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        }
+                                        // Decrease weight by 1kg
+                                        cartProvider.updateWeight(
+                                            cartItem.product.id, -1.0);
                                       },
                                       child: Container(
                                         width: 28,
@@ -304,30 +284,45 @@ class CartPage extends StatelessWidget {
 
                                     const SizedBox(width: 8),
 
-                                    // Current quantity display
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 12, vertical: 6),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.grey),
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: Text(
-                                        '${cartItem.quantity}',
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
+// Combined display and input box
+                                    SizedBox(
+                                      width: 60,
+                                      height: 30,
+                                      child: TextField(
+                                        controller: weightController,
+                                        keyboardType: TextInputType.number,
+                                        textAlign: TextAlign.center,
+                                        decoration: InputDecoration(
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                            horizontal: 6,
+                                            vertical: 0,
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4),
+                                          ),
+                                          suffixText: 'kg',
+                                          suffixStyle:
+                                              const TextStyle(fontSize: 12),
                                         ),
+                                        onSubmitted: (value) {
+                                          if (value.isNotEmpty) {
+                                            cartProvider.setExactWeight(
+                                                cartItem.product.id, value);
+                                            weightController.clear();
+                                          }
+                                        },
                                       ),
                                     ),
 
                                     const SizedBox(width: 8),
-
-                                    // Increment button
+                                    // Increment weight button (+1kg)
                                     InkWell(
                                       onTap: () {
-                                        cartProvider.updateQuantity(
-                                            cartItem.product.id,
-                                            cartItem.quantity + 1);
+                                        // Increase weight by 1kg
+                                        cartProvider.updateWeight(
+                                            cartItem.product.id, 1.0);
                                       },
                                       child: Container(
                                         width: 28,
@@ -345,6 +340,8 @@ class CartPage extends StatelessWidget {
                                         ),
                                       ),
                                     ),
+
+                                    const SizedBox(width: 8),
                                   ],
                                 ),
                               ],
